@@ -29,8 +29,8 @@
      <div ng-show="generalMessage.message" class="alert alert-{{generalMessage.alertLevel}}">{{ generalMessage.message }}</div>
 
 
-            **<pre>{{players | json}}</pre>**
- <!--         **<pre>{{isCurrentPlayerInGame()}}</pre>**
+ <!--           **<pre>{{players | json}}</pre>**
+          **<pre>{{isCurrentPlayerInGame()}}</pre>**
             **<pre>{{game.round}}</pre>**   -->
 
      <div class="alert alert-danger" ng-show="game.round == 'START'">Time to new game: <span >{{game.newGameCountDown}}</span></div>

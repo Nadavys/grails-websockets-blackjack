@@ -1,7 +1,7 @@
 'use strict';
 /* Controllers */
 angular.module('app.controllers', [])
-    .controller('GameTableController', ['$scope', '$window' ,'RPCService', function($scope, $window, RPCService) {
+    .controller('GameTableController', ['$scope', '$window', '$timeout','RPCService', function($scope, $window, $timeout, RPCService) {
 
         //todo: more elegant
         $scope.currentUser = $window.currentPlayer
@@ -83,17 +83,25 @@ angular.module('app.controllers', [])
                             }
                         });
                     if(!gamePlayerUpdated){
-                        console.error("** gamePlayerUpdated",gamePlayerUpdated, $scope.players)
-                        $scope.players.push(entity)
+                        //console.error("** gamePlayerUpdated",entity, $scope.players)
+                        //todo: strange workaround - explore this
+
+                        $timeout(function(){
+                            $scope.players.push(entity);
+                        })
+
+
+                        console.error("**  $scope.players ", $scope.players)
+                        $scope.safeApply();
                     }
                     break;
                 case 'generalMessage':
-                    console.warn("message",entity)
+                    //console.warn("message",entity)
                     $scope.generalMessage.message = entity.message
                     $scope.generalMessage.alertLevel = entity.alertLevel
                     break
             }
-            $scope.safeApply()
+            $scope.safeApply();
         };
 
         $scope.socket = []
