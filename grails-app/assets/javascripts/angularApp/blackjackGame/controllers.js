@@ -60,7 +60,7 @@ angular.module('app.controllers', [])
                 case 'update.hand':
                     if(entity.userId == 0){
                         $scope.dealer.hand = entity.hand
-                        console.info("dealer newhand",$scope.dealer.hand)
+                       // console.info("dealer newhand",$scope.dealer.hand)
                     }else{
                         angular.forEach($scope.players,
                             function(player, index){
@@ -79,13 +79,12 @@ angular.module('app.controllers', [])
                         function(player, index){
                             if(player.userId == entity.userId){
                                 $scope.players[index] = entity
-                                gamePlayerUpdated = $scope.players[index].hand
+                                gamePlayerUpdated = $scope.players[index]
                             }
                         });
                     if(!gamePlayerUpdated){
-                       // console.log()
+                        console.error("** gamePlayerUpdated",gamePlayerUpdated, $scope.players)
                         $scope.players.push(entity)
-                        $scope.$apply();
                     }
                     break;
                 case 'generalMessage':
