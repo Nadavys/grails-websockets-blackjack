@@ -45,6 +45,7 @@ class GameController {
             //empty your hand on new game
             player.hand = null
             currentGame.players << player
+            gameNotificationService.notifyGameStatus(currentGame)
             gameNotificationService.notfiyUpdatedPlayer(player)
             gameNotificationService.notifyGeneralMessage("Player "+ player.name +" joined")
         }

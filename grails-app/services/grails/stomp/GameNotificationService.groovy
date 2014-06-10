@@ -40,7 +40,7 @@ class GameNotificationService {
     }
 
     def notfiyUpdatedPlayer(GamePlayer player, doSendSocket = true){
-        println "new player ${player.internalId}"
+        //println "new player ${player.internalId}"
         def data = [
                 command: 'update.player',
                 entity: convert(player)

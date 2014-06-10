@@ -105,8 +105,7 @@
                              <button class="btn btn-danger" ng-click="cmdPlayerMove('HIT')" >Hit</button>
                              <button class="btn btn-primary" ng-click="cmdPlayerMove('STAND')" >Stand</button>
                          </div>
-
-                         <div class="btn btn-lg btn-danger disabled" ng-show="game.round == 'PLAYER_MOVE' && game.activePlayer != currentUser.userId"> Playing... </div>
+                         <div class="btn btn-lg btn-danger disabled" ng-show="game.round == 'PLAYER_MOVE' && game.activePlayer != currentUser.userId && player.userId != currentUser.userId"> Playing... </div>
                      </div>
                 </div>
        </div>

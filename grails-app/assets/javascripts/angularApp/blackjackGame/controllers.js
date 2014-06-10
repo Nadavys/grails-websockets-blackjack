@@ -16,7 +16,6 @@ angular.module('app.controllers', [])
 
        //on load, get table status via ajax get
         RPCService.getTableStatus().then(function(data){
-         //  console.info("getTableStatus", data)
             angular.forEach(data, function(dataItem, index){
                     handleNewInput(dataItem)
                 }
@@ -83,20 +82,10 @@ angular.module('app.controllers', [])
                             }
                         });
                     if(!gamePlayerUpdated){
-                        //console.error("** gamePlayerUpdated",entity, $scope.players)
-                        //todo: strange workaround - explore this
-
-                        $timeout(function(){
-                            $scope.players.push(entity);
-                        })
-
-
-                        console.error("**  $scope.players ", $scope.players)
-                        $scope.safeApply();
+                           $scope.players.push(entity);
                     }
                     break;
                 case 'generalMessage':
-                    //console.warn("message",entity)
                     $scope.generalMessage.message = entity.message
                     $scope.generalMessage.alertLevel = entity.alertLevel
                     break
@@ -164,7 +153,6 @@ angular.module('app.controllers', [])
                         gamePlayer = $scope.players[index].hand
                     }
                 });
-            console.log("gameplayer:: ",gamePlayer)
             return gamePlayer
         }
 
