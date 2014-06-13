@@ -71,7 +71,7 @@ class GameController {
     def endGame(){
         this.currentGame?.round = BlackJack.Round.GAMEOVER
         this.currentGame?.activePlayer = null
-       gameNotificationService.notifyGameStatus(currentGame)
+        gameNotificationService.notifyGameStatus(currentGame)
         gameNotificationService.notifyGeneralMessage("Game Over", 'danger')
         render([command:'endGame', success: true] as JSON)
     }
@@ -80,12 +80,32 @@ class GameController {
     private startNewGameCountdown(){
         Thread.start {
             currentGame.newGameCountDownInitial.times {
-                currentGame.newGameCountDown--
+                currentGame.countDownTimer--
                 gameNotificationService.notifyGameStatus(currentGame)
                 //old school
                 Thread.sleep(1000)
             }
             dealAllPlayers()
+        }
+    }
+    /*todo: make this scheduled and async*/
+    private startPlayerMoveCountdown(GamePlayer player){
+        Thread.start {
+            currentGame.resetPlayerMoveTimer()
+            while(currentGame.activePlayer && currentGame.countDownTimer > 1 && player.id == currentGame.activePlayer.id){
+                currentGame.countDownTimer--
+                gameNotificationService.notifyGameStatus(currentGame)
+                //old school
+                Thread.sleep(1000)
+            }
+            if( player?.id ==
+                    currentGame.activePlayer?.id){
+                //timeout! player will stand
+                gameNotificationService.notifyGeneralMessage("Player timed out")
+                playerMove()
+            }else{
+                //player must have responded
+            }
         }
     }
 
@@ -97,6 +117,8 @@ class GameController {
         currentGame.players.each{
             gameNotificationService.notfiyUpdatedHand(it)
         }
+        //todo: game status resolution
+        //**
        gameNotificationService.notifyGameStatus(currentGame)
         gameNotificationService.notifyGeneralMessage("All player have been dealt a new hand", 'success')
         Thread.start {
@@ -105,13 +127,13 @@ class GameController {
         }
     }
 
-
    private playerMove(){
        if(currentGame.players){
            if(currentGame.round != BlackJack.Round.PLAYER_MOVE){
                currentGame.round = BlackJack.Round.PLAYER_MOVE
                currentGame.activePlayer = currentGame.players.first()
            }else{
+               //move to next player
                currentGame.activePlayer = (currentGame.players[currentGame.players.indexOf(currentGame.activePlayer)+1])?:null
            }
 
@@ -121,6 +143,9 @@ class GameController {
            }
        }
        if(currentGame.activePlayer){
+           //todo: start timer. player has given time to react
+           startPlayerMoveCountdown(currentGame.activePlayer)
+           ////////////////////////////////
            gameNotificationService.notifyGeneralMessage("Player " + currentGame.activePlayer.name +" may `hit` or `stand`")
        }else{
                dealerMove()
@@ -152,14 +177,16 @@ class GameController {
     //todo: resolution
     private gameOver(){
         currentGame.round = BlackJack.Round.GAMEOVER
-       gameNotificationService.notifyGameStatus(currentGame)
+        gameNotificationService.notifyGameStatus(currentGame)
         gameNotificationService.notifyGeneralMessage("Game Over", 'danger')
         currentGame.players.each {
             gameNotificationService.notfiyUpdatedPlayer(it)
         }
     }
 
-    /* ajax, not socket,  maybe change this*/
+    /*
+     * player responds to the application via ajax, not socket,  maybe change this
+     */
     def getPlayerMove(){
         def response = [command:'playerMove', success: true]
 
@@ -170,7 +197,6 @@ class GameController {
         }else{
             response.success = false
         }
-
         render(response as JSON)
     }
 
@@ -183,6 +209,7 @@ class GameController {
             gameNotificationService.notfiyUpdatedHand(currentGame.activePlayer)
             if(this.currentGame.activePlayer.hand.isValidHand()){
                 //keep playing
+                currentGame.resetPlayerMoveTimer()
                 //gameNotificationService.notifyRequirePlayerMove()
             }else{
                 playerMove()
@@ -193,7 +220,9 @@ class GameController {
 
     }
 
-    //ajaxx
+    /*
+     * ajax - when user enters or refreshes the page
+     */
     def tableStatus(){
         //send all info about the game
         def data = []

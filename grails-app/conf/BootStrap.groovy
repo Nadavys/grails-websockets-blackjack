@@ -12,7 +12,7 @@ class BootStrap {
             resultMap['round'] = blackJack.round.toString()
             resultMap['status'] = blackJack.status.toString()
             resultMap['timeStarted'] = blackJack.timeStarted
-            resultMap['newGameCountDown'] = blackJack.newGameCountDown
+            resultMap['countDownTimer'] = blackJack.countDownTimer
             resultMap['players'] = blackJack.players.collect{[name:it.name, id: it.internalId]}
 
             resultMap

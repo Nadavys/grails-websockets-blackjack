@@ -1,16 +1,25 @@
 .card {
-  font-size: 2.5em;
-  line-height: 1.5em;
-
-  width: 107px;
-  height: 125px;
+  width: 100px;
+  height: 120px;
   border: 1px solid  #2F2F2F;
   position: relative;
   background-color: #fbfbfb;
   font-family: 'Helvetica', serif;
   margin: 5px;
+  padding: 5px 0 0 15px;
   border-radius: 8px;
   box-shadow: 6px 6px 4px #888888;
+}
+
+.rank{
+    font-size: 30px;
+    width: 27px;
+    text-align: center;
+}
+
+.suit{
+    font-size: 45px;
+    line-height: 35px;
 }
 
 .card.back {
@@ -88,6 +97,10 @@ background:
     font-style: italic;
     font-family: 'comic sans ms';
     top:15%;
+
+    -ms-transform: rotate(11deg);
+    -webkit-transform: rotate(11deg);
+    transform: rotate(11deg);
 }
 
 .hand-bust .playerStatus{
@@ -111,3 +124,8 @@ background:
     -moz-animation: blink 1s linear infinite;
     animation: blink 1s linear infinite;
 }
+
+.playerTimer{
+    font-size: 20px;
+}
+

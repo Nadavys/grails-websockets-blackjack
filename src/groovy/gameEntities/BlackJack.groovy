@@ -8,8 +8,9 @@ import groovy.transform.ToString
 @ToString(excludes = 'deck,players')
 class BlackJack extends CardGame{
     static final Integer initialCardsNum = 2
-    static final Integer initialCredits= 100
+    static final Integer initialCredits = 100
     static final Integer newGameCountDownInitial = 5
+    static final Integer playerMoveCountDownInitial = 5
     enum PlayerChoices { HIT, STAND}
     enum GameStatus{ DEALER_BUST, DEALER_WON, PLAY}
     //todo: add round 'BET'
@@ -29,7 +30,7 @@ class BlackJack extends CardGame{
 
     GamePlayer activePlayer
 
-    Integer newGameCountDown
+    Integer countDownTimer
 
 
     Hand newHand(){
@@ -46,7 +47,7 @@ class BlackJack extends CardGame{
         this.instructions = "Don't go over 21"
         this.newDeck()
         this.round = BlackJack.Round.START
-        this.newGameCountDown = this.newGameCountDownInitial
+        this.countDownTimer = this.newGameCountDownInitial
 
         dealer = new GamePlayer(name:"Dealer", internalId: 0)
     }
@@ -64,6 +65,10 @@ class BlackJack extends CardGame{
 
     boolean isGameOver(){
         (this.round == BlackJack.Round.GAMEOVER)
+    }
+
+    void resetPlayerMoveTimer(){
+        countDownTimer = playerMoveCountDownInitial
     }
 
 }

@@ -63,7 +63,7 @@ class GameNotificationService {
         resultMap['round'] = blackJack.round.toString()
         resultMap['status'] = blackJack.status.toString()
         resultMap['timeStarted'] = blackJack.timeStarted
-        resultMap['newGameCountDown'] = blackJack.newGameCountDown
+        resultMap['countDownTimer'] = blackJack.countDownTimer
         resultMap['activePlayer'] = blackJack.activePlayer?.internalId?: ''
 
         resultMap

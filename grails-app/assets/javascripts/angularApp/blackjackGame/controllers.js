@@ -22,7 +22,6 @@ angular.module('app.controllers', [])
             );
         });
 
-
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;
             if(phase == '$apply' || phase == '$digest') {
@@ -53,7 +52,7 @@ angular.module('app.controllers', [])
                     $scope.game.timeStarted = entity.timeStarted
 
                     $scope.game.activePlayer = entity.activePlayer
-                    $scope.game.newGameCountDown = entity.newGameCountDown
+                    $scope.game.countDownTimer = entity.countDownTimer
                     break;
 
                 case 'update.hand':
@@ -67,7 +66,6 @@ angular.module('app.controllers', [])
                                     $scope.players[index].hand = entity.hand
                                 }
                             });
-
                     }
                     break;
 

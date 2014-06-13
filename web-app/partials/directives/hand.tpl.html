@@ -1,14 +1,6 @@
-
-<div  class="">
 <div  ng-repeat="card in hand.cards" class="card col-md-1 {{card.suit | lowercase}}" ng-class="{'isHiddenCard': !card.isVisible }">
-                    <span class="suit" ng-switch on="card.suit">
-                        <span data-ng-switch-when="DIAMONDS">&diams;</span>
-                        <span data-ng-switch-when="HEARTS">&hearts;</span>
-                        <span data-ng-switch-when="CLUBS">&clubs;</span>
-                        <span data-ng-switch-when="SPADES">&spades;</span>
 
-            </span>
-                <span class="rank"  ng-switch on="card.rank">
+                <div class="rank"  ng-switch on="card.rank">
                             <span data-ng-switch-when="DEUCE">2</span>
                             <span data-ng-switch-when="THREE">3</span>
                             <span data-ng-switch-when="FOUR">4</span>
@@ -22,19 +14,18 @@
                             <span data-ng-switch-when="QUEEN">Q</span>
                             <span data-ng-switch-when="KING">K</span>
                             <span data-ng-switch-when="ACE">A</span>
-                </span>
+                </div>
+
+                    <div class="suit" ng-switch on="card.suit">
+                        <span data-ng-switch-when="DIAMONDS">&diams;</span>
+                        <span data-ng-switch-when="HEARTS">&hearts;</span>
+                        <span data-ng-switch-when="CLUBS">&clubs;</span>
+                        <span data-ng-switch-when="SPADES">&spades;</span>
+                  </div>
 </div>
 
- <div   class="col-md-2">
-     <dl>
-         <dd>Value(s)</dd>
-         <dt>{{hand.handValue.join(', ')}}</dt>
-     </dl>
 
 
 
-     </div>
-     </div>
 
-     </div>
 
