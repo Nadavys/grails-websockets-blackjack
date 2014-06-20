@@ -129,3 +129,12 @@ background:
     font-size: 20px;
 }
 
+#joinGameButton{
+    position: absolute;
+    left: 40%;
+    top: 65px;
+}
+
+#joinGameButton button{
+    font-size:60px;
+}

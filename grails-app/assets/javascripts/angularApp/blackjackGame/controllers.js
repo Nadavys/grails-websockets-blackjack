@@ -9,7 +9,7 @@ angular.module('app.controllers', [])
 
         $scope.game = {};
         $scope.players = [];
-        $scope.dealer = {hand:null};
+        $scope.dealer = {userId:0, hand:null};
         $scope.generalMessage = [];
         $scope.lastGameRound = null
         $scope.currentUserAskedToJoin = false
@@ -117,11 +117,7 @@ angular.module('app.controllers', [])
             RPCService.joinGame();
         }
 
-        $scope.cmdPlayerMove = function(action){
 
-            $scope.isPlayerMoveRequired = false
-            RPCService.playerMove(action)
-        }
 
         $scope.resetMessage = function(){
             $scope.messages = [];

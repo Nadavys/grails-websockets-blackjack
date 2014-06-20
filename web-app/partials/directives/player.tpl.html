@@ -1,0 +1,55 @@
+<div class="user row well gameplayerSpace"  ng-class="{ 'currentTurn' : player.userId == game.activePlayer, 'hand-won': player.hand.status == 'WON', 'hand-bust': player.hand.status == 'BUST'}">
+
+    <div class="col-md-2" style="position: relative">
+                <span ng-show="player.hand.status == 'BUST'"  class="playerStatus" >
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Bust
+                </span>
+
+                <span ng-show="player.hand.status == 'WON'  && player.hand.bestValue != 21" class="playerStatus">
+                    <span  class="glyphicon glyphicon-ok"></span>
+                    Won
+                </span>
+                <span ng-show="player.hand.bestValue == 21" class="playerStatus" style="font-size: 40px;">
+                    <!--<span  class="glyphicon glyphicon-ok"></span>-->
+                   Blackjack
+                </span>
+                <span ng-show="player.hand.status == 'EVEN'"  class="playerStatus">
+                    <span  class="glyphicon glyphicon-ok"></span>
+                    Even
+                </span>
+
+        **{{player.userId}}**
+        <img ng-if="!player.userId" ng-src="/grails-websockets-blackjack/images/cardsNchips.jpg" class="img-responsive img-circle"/>
+        <img ng-if="player.userId != 0" ng-src="{{player.imageUrl}}" class="img-responsive img-circle"/>
+    </div>
+
+    <div class="col-md-10">
+        <div class="row">
+            <div class="name" style="">{{player.name}} </div>
+        </div>
+        <div class="row">
+            <div class="hand-area pull-left">
+                <hand hand="player.hand"/>
+            </div>
+
+            <div class="col-md-3">
+
+                <dl ng-show="player.hand.handValue.length">
+                    <dd>Value(s)</dd>
+                    <dt  class="playerTimer">{{player.hand.handValue.join(', ')}}</dt>
+                </dl>
+
+                <div class="btn-block" ng-show="player.userId == currentUser.userId && game.activePlayer == currentUser.userId" >
+                    <button class="btn btn-danger" ng-click="cmdPlayerMove('HIT')" >Hit</button>
+                    <button class="btn btn-primary" ng-click="cmdPlayerMove('STAND')" >Stand</button>
+                    <div class="playerTimer">Time Left: {{game.countDownTimer}}</div>
+
+                    <div class="btn btn-lg btn-danger disabled" ng-show="game.round == 'PLAYER_MOVE' && game.activePlayer != currentUser.userId && player.userId != currentUser.userId"> Playing... </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
