@@ -38,7 +38,7 @@ angular.module('app.controllers', [])
             /*
              *     enum GameStatus{ DEALER_BUST, DEALER_WON, PLAY}
              //todo: add round 'BET'
-             enum Round{ START(0), DEAL(1), PLAYER_MOVE(2), RESOLUTION(3), END(4)
+             enum Round{ PLACE_BETS(0), DEAL(1), PLAYER_MOVE(2), RESOLUTION(3), END(4)
              */
             var entity = data.entity
             switch (data.command){
@@ -47,7 +47,6 @@ angular.module('app.controllers', [])
                     if(entity.round != $scope.game.round){
                         onRoundChange(entity.round, $scope.game.round)
                     }
-                    $scope.game.status = entity.status
                     $scope.game.round = entity.round
                     $scope.game.timeStarted = entity.timeStarted
 
@@ -125,7 +124,7 @@ angular.module('app.controllers', [])
 
         function onRoundChange(newRound, oldRound){
             $scope.resetMessage();
-            if(newRound == 'START'){
+            if(newRound == 'PLACE_BETS'){
                 $scope.players = []
                 $scope.dealer = {hand:null}
 

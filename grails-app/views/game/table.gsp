@@ -27,8 +27,11 @@
 
      <div ng-show="generalMessage.message" class="alert alert-{{generalMessage.alertLevel}}">{{ generalMessage.message }}</div>
 
-     <div class="alert alert-danger" ng-show="game.round == 'START'">Time to new game: <span >{{game.countDownTimer}}</span></div>
+     <div class="alert alert-danger" ng-show="game.round == 'PLACE_BETS'">Time to new game: <span >{{game.countDownTimer}}</span></div>
 
+     <div class="joinGameButton" ng-show="!currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'PLACE_BETS' || game.round == null)">
+         <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Click to Join Game</button>
+     </div>
 
      <div class="row" >
     <div>
@@ -36,39 +39,17 @@
 
         <!--players-->
         <div ng-repeat="player in players">
+        <div class="joinGameButton" ng-show="currentUser.userId == currentUser.userId && !currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'PLACE_BETS' || game.round == null)">
+            <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Click to Join Game</button>
+        </div>
 
                <gameplayer player="player" game="game" current-user="currentUser"/>
        </div>
 
-
 </div>
-   <!--
-     <div class="well">
-         <div class="row btn-block">
-             <h4>this panel for development</h4>
-             <button class="" ng-click="cmdEndGame()" >Force End Game</button>
-             <button class="" ng-click="cmdNewGame()" >Trigger New Game</button>
-         </div>
 
-     <div class=" row">
-         <dl class="dl-horizontal">
-             <dt>Game Status</dt>
-             <dd>{{game.status}}</dd>
-
-             <dt>round</dt>
-             <dd>{{game.round}}</dd>
-
-             <dt>timeStarted</dt>
-             <dd>{{ game.timeStarted | date:'shortTime'}}</dd>
-
-         </dl>
-     </div>
-     </div>
-         -->
  </div>
-     <div id="joinGameButton" ng-show="!currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'START' || game.round == null)">
-         <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Click to Join Game</button>
-     </div>
+
  </div>
  </div>
 

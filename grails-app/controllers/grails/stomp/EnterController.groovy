@@ -6,10 +6,11 @@ class EnterController {
 
     def index(){
         String playerName
+        GamePlayer gamePlayer
         if(params.isSubmit){
             playerName = params.playerName
             Random random = new Random()
-            GamePlayer gamePlayer = new GamePlayer(name: playerName, internalId: random.nextLong().abs(),
+            gamePlayer = new GamePlayer(name: playerName, internalId: random.nextLong().abs(),
                     type: GamePlayer.Type.DEALER)
             if(gamePlayer.validate()){
                 //want the player to have an ID

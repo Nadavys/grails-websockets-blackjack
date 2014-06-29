@@ -61,7 +61,6 @@ class GameNotificationService {
     private convert(BlackJack blackJack){
         def resultMap = [:]
         resultMap['round'] = blackJack.round.toString()
-        resultMap['status'] = blackJack.status.toString()
         resultMap['timeStarted'] = blackJack.timeStarted
         resultMap['countDownTimer'] = blackJack.countDownTimer
         resultMap['activePlayer'] = blackJack.activePlayer?.internalId?: ''

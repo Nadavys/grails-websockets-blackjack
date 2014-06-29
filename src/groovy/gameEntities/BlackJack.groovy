@@ -12,9 +12,9 @@ class BlackJack extends CardGame{
     static final Integer newGameCountDownInitial = 5
     static final Integer playerMoveCountDownInitial = 5
     enum PlayerChoices { HIT, STAND}
-    enum GameStatus{ DEALER_BUST, DEALER_WON, PLAY}
+   // enum GameStatus{ DEALER_BUST, GAME_OVER, PLAY}
     //todo: add round 'BET'
-    enum Round{ START(0), DEAL(1), PLAYER_MOVE(2), DEALER_MOVE(3), RESOLUTION(4), GAMEOVER(5)
+    enum Round{ PLACE_BETS(0), DEAL(1), PLAYER_MOVE(2), DEALER_MOVE(3), RESOLUTION(4), GAMEOVER(5)
         Integer order
         Round(order){
             this.order = order
@@ -24,8 +24,8 @@ class BlackJack extends CardGame{
     List<GamePlayer> players = []
     Deck deck
     GamePlayer dealer
-    Round round = Round.START
-    GameStatus status
+    Round round = Round.PLACE_BETS
+    //GameStatus status
     Date timeStarted  = new Date()
 
     GamePlayer activePlayer
@@ -46,7 +46,7 @@ class BlackJack extends CardGame{
         this.name = "Blackjack"
         this.instructions = "Don't go over 21"
         this.newDeck()
-        this.round = BlackJack.Round.START
+        this.round = BlackJack.Round.PLACE_BETS
         this.countDownTimer = this.newGameCountDownInitial
 
         dealer = new GamePlayer(name:"Dealer", internalId: 0, imageUrl: "")
@@ -60,6 +60,12 @@ class BlackJack extends CardGame{
             return BlackJack.PlayerChoices.HIT
         }
         return BlackJack.PlayerChoices.STAND
+    }
+
+
+    void setGameOver(){
+        this.round = BlackJack.Round.GAMEOVER
+        activePlayer = null
     }
 
 

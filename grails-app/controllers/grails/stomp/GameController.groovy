@@ -1,15 +1,14 @@
 package grails.stomp
 
 import gameEntities.BlackJack
-import gameEntities.Hand
 import grails.converters.JSON
 
 
 class GameController {
     GameService gameService
     GameNotificationService gameNotificationService
-
     GamePlayerSessionService gamePlayerSessionService
+
    /* signleton game */
     static BlackJack currentGame
     def index() {
@@ -39,7 +38,7 @@ class GameController {
     def joinGame(){
         newGame()
         def retVal = [command:'joinGame', success: true]
-        if(currentGame?.round == BlackJack.Round.START){
+        if(currentGame?.round == BlackJack.Round.PLACE_BETS){
         GamePlayer player = gamePlayerSessionService.getCurrentGamePlayer(session)
         if(!currentGame.players.contains(player)){
             //empty your hand on new game
@@ -117,9 +116,8 @@ class GameController {
         currentGame.players.each{
             gameNotificationService.notfiyUpdatedHand(it)
         }
-        //todo: game status resolution
-        //**
-       gameNotificationService.notifyGameStatus(currentGame)
+
+        gameNotificationService.notifyGameStatus(currentGame)
         gameNotificationService.notifyGeneralMessage("All player have been dealt a new hand", 'success')
         Thread.start {
             Thread.sleep(1000)
@@ -128,26 +126,14 @@ class GameController {
     }
 
    private playerMove(){
-       if(currentGame.players){
-           if(currentGame.round != BlackJack.Round.PLAYER_MOVE){
-               currentGame.round = BlackJack.Round.PLAYER_MOVE
-               currentGame.activePlayer = currentGame.players.first()
-           }else{
-               //move to next player
-               currentGame.activePlayer = (currentGame.players[currentGame.players.indexOf(currentGame.activePlayer)+1])?:null
-           }
+       gameService.getNextActivePlayer(this.currentGame)
 
-          // //skip player already won/bust
-           while(currentGame.activePlayer && currentGame.activePlayer.hand.status != Hand.HandStatus.IN_GAME){
-               currentGame.activePlayer = (currentGame.players[currentGame.players.indexOf(currentGame.activePlayer)+1])?:null
-           }
-       }
        if(currentGame.activePlayer){
-           //todo: start timer. player has given time to react
+           // start timer. player has given time to react
            startPlayerMoveCountdown(currentGame.activePlayer)
-           ////////////////////////////////
            gameNotificationService.notifyGeneralMessage("Player " + currentGame.activePlayer.name +" may `hit` or `stand`")
        }else{
+           //no motr players, dealer moves
                dealerMove()
            }
       gameNotificationService.notifyGameStatus(currentGame)
@@ -162,21 +148,15 @@ class GameController {
         //add drama!
 //        Thread.wait(1000)
         gameService.dealerFinalDraw(currentGame)
-        println "notify new dealer card"
         gameNotificationService.notfiyUpdatedHand(currentGame.dealer)
         //todo: handle end of game
-        gameResolution()
-    }
-
-    private gameResolution(){
-        gameService.gameFinale(currentGame)
-        gameNotificationService.notifyGameStatus(currentGame)
         gameOver()
     }
 
+
     //todo: resolution
     private gameOver(){
-        currentGame.round = BlackJack.Round.GAMEOVER
+        gameService.gameFinale(currentGame)
         gameNotificationService.notifyGameStatus(currentGame)
         gameNotificationService.notifyGeneralMessage("Game Over", 'danger')
         currentGame.players.each {

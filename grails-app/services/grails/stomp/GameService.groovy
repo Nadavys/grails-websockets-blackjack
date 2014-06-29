@@ -1,5 +1,7 @@
 package grails.stomp
 
+import gameEntities.BlackJack
+import gameEntities.Hand
 import grails.transaction.Transactional
 
 @Transactional
@@ -10,15 +12,14 @@ class GameService {
         }
 
         def newBlackjackGame(Collection<GamePlayer> players){
-            def game = new gameEntities.BlackJack()
+            def game = new BlackJack()
             game.players = players
 
             return game
         }
 
-        void newHandRound(gameEntities.BlackJack blackJack){
+        void newHandRound(BlackJack blackJack){
             blackJack.dealer.hand = blackJack.newHand()
-            //might want to hide a card, if dealer not won or bust
             if(blackJack.dealer.hand.isValidHand()){
                 blackJack.dealer.hand.cards[1].hide()
             }
@@ -26,19 +27,7 @@ class GameService {
             blackJack.players.each{ GamePlayer player ->
                 player.hand = blackJack.newHand()
             }
-            //if dealer has lost or won, its game over
-            switch (blackJack.dealer.hand.status){
-                case gameEntities.Hand.HandStatus.WON:
-                    blackJack.status = gameEntities.BlackJack.GameStatus.DEALER_WON
-                    blackJack.isOver = true
-                    break
-                case gameEntities.Hand.HandStatus.BUST:
-                    blackJack.status = gameEntities.BlackJack.GameStatus.DEALER_BUST
-                    blackJack.isOver = true
-                    break
-                default:
-                    blackJack.status = gameEntities.BlackJack.GameStatus.PLAY
-            }
+            resolveGameRound(blackJack)
         }
 
 
@@ -57,25 +46,27 @@ class GameService {
             }
         }
 
+    def resolveGameRound(BlackJack blackJack){
+        GamePlayer dealer = blackJack.dealer
+        List players = blackJack.players.findAll{ GamePlayer p -> p.hand.status == Hand.HandStatus.IN_GAME}
+        if(players.size()){
+            if(dealer.hand.status == gameEntities.Hand.HandStatus.BUST){
+                players.each { GamePlayer p -> p.hand.setWon()}
+            }
+            else if(dealer.hand.status == gameEntities.Hand.HandStatus.WON){
+                players.each { GamePlayer p -> p.hand.setBust() }
+            }
+        }
+
+        //in no more players with valid hand, its game over
+        if(!blackJack.players.any{ GamePlayer p -> p.hand.status == Hand.HandStatus.IN_GAME}){
+            blackJack.setGameOver()
+        }
+    }
 
         def gameFinale(gameEntities.BlackJack blackJack){
-            blackJack.round = gameEntities.BlackJack.Round.RESOLUTION
-            GamePlayer dealer = blackJack.dealer
+            resolveGameRound(blackJack)
             List players = blackJack.players.findAll{ GamePlayer p -> p.hand.status == gameEntities.Hand.HandStatus.IN_GAME}
-            if(!players.size()){
-                //all are out
-                blackJack.status = gameEntities.BlackJack.GameStatus.DEALER_WON
-                println "All player already out"
-            }else{
-                if(dealer.hand.status == gameEntities.Hand.HandStatus.BUST){
-                    players.each { GamePlayer p -> p.hand.setWon()}
-                    blackJack.status = gameEntities.BlackJack.GameStatus.DEALER_BUST
-                }
-                else if(dealer.hand.status == gameEntities.Hand.HandStatus.WON){
-                    players.each { GamePlayer p -> p.hand.setBust()}
-                    blackJack.status = gameEntities.BlackJack.GameStatus.DEALER_WON
-                }
-                else{
                     //all hand values, including dealer, values are below 21
                     Integer dealerValue = blackJack.dealer.hand.bestValue
                     players.each { GamePlayer p ->
@@ -87,7 +78,25 @@ class GameService {
                             p.hand.setBust()
                         }
                     }
-                }
-            }
+            blackJack.setGameOver()
         }
+
+
+    void getNextActivePlayer(BlackJack currentGame){
+    if(currentGame.players){
+        if(currentGame.round != BlackJack.Round.PLAYER_MOVE){
+            currentGame.round = BlackJack.Round.PLAYER_MOVE
+            currentGame.activePlayer = currentGame.players.first()
+        }else{
+            //move to next player
+            currentGame.activePlayer = (currentGame.players[currentGame.players.indexOf(currentGame.activePlayer)+1])?:null
+        }
+
+        // //skip player already won/bust
+        while(currentGame.activePlayer && currentGame.activePlayer.hand.status != Hand.HandStatus.IN_GAME){
+            currentGame.activePlayer = (currentGame.players[currentGame.players.indexOf(currentGame.activePlayer)+1])?:null
+        }
+    }
+    }
+
     }
