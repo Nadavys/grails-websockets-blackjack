@@ -16,7 +16,6 @@ class EventHandlerService {
 
     @Selector("appEvents")
     void sendPushMessage(Map<String, String> data) {
-        println "sendPushMessage"
         brokerMessagingTemplate.convertAndSend "/topic/pushGameStatus", data
     }
 

@@ -89,13 +89,5 @@ class GameService {
                     }
                 }
             }
-
-            ///todo: remove output
-            println "** dealer: ${blackJack.dealer.hand.bestValue}"
-            players.each { GamePlayer p ->
-                println "** ${p.name}: ${p.hand.bestValue} -> ${p.hand.status}"
-            }
-
         }
-
     }

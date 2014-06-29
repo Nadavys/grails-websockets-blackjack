@@ -57,6 +57,8 @@ grails.project.dependency.resolution = {
         // TODO: why did jcenter() not do the trick but explicit mavenRepo did?
         mavenRepo "http://jcenter.bintray.com"
 
+//        mavenRepo 'http://repository.jboss.org/maven2/'
+
     }
 
     dependencies {
@@ -72,8 +74,10 @@ grails.project.dependency.resolution = {
         compile "org.projectreactor:reactor-spring:1.0.1.RELEASE", {
             excludes "spring-core", "spring-expression", "spring-beans", "spring-context", "spring-context-support"
         }
-        mavenCentral()
-        mavenRepo 'http://repository.jboss.org/maven2/'
+
+
+        compile 'org.codehaus.gpars:gpars:1.1.0'
+        compile 'org.codehaus.jsr166-mirror:jsr166y:1.7.0'
     }
 
     plugins {
@@ -103,7 +107,7 @@ grails.project.dependency.resolution = {
         //compile ":handlebars-asset-pipeline:1.3.0.3"
 
 //        runtime 'org.codehaus.gpars:gpars:1.1.0'
-       // build 'org.codehaus.gpars:gpars:1.1.0'
+     //   build 'org.codehaus.gpars:gpars:1.1.0'
         //compile 'org.codehaus.jsr166-mirror:jsr166y:1.7.0'
     }
 

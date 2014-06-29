@@ -5,11 +5,14 @@ import groovy.transform.ToString
 
 @ToString()
 class GamePlayer {
+    enum Type{ DEALER, PLAYER}
+
     String name
     Hand hand
     Integer credits = 0
     Long internalId = 0
     String imageUrl = this.randomAvatar()
+    Type type
 
     static constraints = {
         name(required: true, blank: false)

@@ -42,6 +42,11 @@
 
 
     <div class="row">
+
+        <g:hasErrors bean="${playerName}">
+            <g:eachError><p><g:message error="${it}"/></p></g:eachError>
+        </g:hasErrors>
+
         <form action="" method="post">
             <input type="hidden" name="isSubmit" value="true"/>
             <div class="form-group">

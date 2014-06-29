@@ -67,7 +67,7 @@
          -->
  </div>
      <div id="joinGameButton" ng-show="!currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'START' || game.round == null)">
-         <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Join Game</button>
+         <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Click to Join Game</button>
      </div>
  </div>
  </div>

@@ -9,7 +9,7 @@ angular.module('app.controllers', [])
 
         $scope.game = {};
         $scope.players = [];
-        $scope.dealer = {userId:0, hand:null};
+        $scope.dealer = {userId:0, hand:null, name:"Dealer"};
         $scope.generalMessage = [];
         $scope.lastGameRound = null
         $scope.currentUserAskedToJoin = false
@@ -136,8 +136,6 @@ angular.module('app.controllers', [])
 
             }
         }
-
-
 
         $scope.getPlayerById = function(id){
             var gamePlayer = null;

@@ -9,7 +9,8 @@ class EnterController {
         if(params.isSubmit){
             playerName = params.playerName
             Random random = new Random()
-            GamePlayer gamePlayer = new GamePlayer(name: playerName, internalId: random.nextLong().abs())
+            GamePlayer gamePlayer = new GamePlayer(name: playerName, internalId: random.nextLong().abs(),
+                    type: GamePlayer.Type.DEALER)
             if(gamePlayer.validate()){
                 //want the player to have an ID
                 gamePlayer.save(flush: true)
@@ -19,6 +20,6 @@ class EnterController {
                 return false
             }
         }
-        [playerName: playerName]
+        [playerName: playerName, gamePlayer: gamePlayer]
     }
 }

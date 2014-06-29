@@ -10,7 +10,7 @@
                     <span  class="glyphicon glyphicon-ok"></span>
                     Won
                 </span>
-                <span ng-show="player.hand.bestValue == 21" class="playerStatus" style="font-size: 40px;">
+                <span ng-show="player.hand.bestValue == 21" class="playerStatus" style="font-size: 40px;margin-left:-5px;">
                     <!--<span  class="glyphicon glyphicon-ok"></span>-->
                    Blackjack
                 </span>
@@ -19,7 +19,6 @@
                     Even
                 </span>
 
-        **{{player.userId}}**
         <img ng-if="!player.userId" ng-src="/grails-websockets-blackjack/images/cardsNchips.jpg" class="img-responsive img-circle"/>
         <img ng-if="player.userId != 0" ng-src="{{player.imageUrl}}" class="img-responsive img-circle"/>
     </div>
