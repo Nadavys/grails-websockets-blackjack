@@ -4,12 +4,13 @@ angular.module('app.controllers', [])
     .controller('GameTableController', ['$scope', '$window', '$timeout','RPCService', function($scope, $window, $timeout, RPCService) {
 
         //todo: more elegant
-        $scope.currentUser = $window.currentPlayer
-        console.warn($scope.currentUser)
+        $scope.currentPlayerId = $window.currentPlayerId
+        $scope.currentPlayer = null
+        console.warn("currentPlayerId", $scope.currentPlayerId)
 
         $scope.game = {};
         $scope.players = [];
-        $scope.dealer = {userId:0, hand:null, name:"Dealer"};
+        $scope.dealer = {id:0, hand:null, name:"Dealer"};
         $scope.generalMessage = [];
         $scope.lastGameRound = null
         $scope.currentUserAskedToJoin = false
@@ -36,7 +37,6 @@ angular.module('app.controllers', [])
 
         var handleNewInput =  function(data){
             /*
-             *     enum GameStatus{ DEALER_BUST, DEALER_WON, PLAY}
              //todo: add round 'BET'
              enum Round{ PLACE_BETS(0), DEAL(1), PLAYER_MOVE(2), RESOLUTION(3), END(4)
              */
@@ -55,13 +55,13 @@ angular.module('app.controllers', [])
                     break;
 
                 case 'update.hand':
-                    if(entity.userId == 0){
+                    if(entity.type === "DEALER"){
                         $scope.dealer.hand = entity.hand
                        // console.info("dealer newhand",$scope.dealer.hand)
                     }else{
                         angular.forEach($scope.players,
                             function(player, index){
-                                if(player.userId == entity.userId){
+                                if(player.id == entity.id){
                                     $scope.players[index].hand = entity.hand
                                 }
                             });
@@ -69,17 +69,26 @@ angular.module('app.controllers', [])
                     break;
 
                 case 'update.player':
+                    if(entity.type === "DEALER"){
+                    $scope.dealer = entity
+                    // console.info("dealer newhand",$scope.dealer.hand)
+                }else{
                     var gamePlayerUpdated = null
                     /* if already exists, replace, otherwise append new player*/
                     angular.forEach($scope.players,
                         function(player, index){
-                            if(player.userId == entity.userId){
+                            if(player.id == entity.id){
                                 $scope.players[index] = entity
                                 gamePlayerUpdated = $scope.players[index]
                             }
                         });
                     if(!gamePlayerUpdated){
                            $scope.players.push(entity);
+                    }
+
+                        if($scope.currentPlayerId == entity.id ){
+                            $scope.currentPlayer = entity
+                        }
                     }
                     break;
                 case 'generalMessage':
@@ -126,6 +135,7 @@ angular.module('app.controllers', [])
             $scope.resetMessage();
             if(newRound == 'PLACE_BETS'){
                 $scope.players = []
+                $scope.currentPlayer = null
                 $scope.dealer = {hand:null}
 
             }
@@ -140,7 +150,7 @@ angular.module('app.controllers', [])
             var gamePlayer = null;
             angular.forEach($scope.players,
                 function(player, index){
-                    if(player.userId == id){
+                    if(player.id == id){
                         gamePlayer = $scope.players[index].hand
                     }
                 });
@@ -148,7 +158,7 @@ angular.module('app.controllers', [])
         }
 
         $scope.isCurrentPlayerInGame = function(){
-            return ($scope.getPlayerById($scope.currentUser.userId) !== null)? true : false;
+            return ($scope.getPlayerById($scope.currentPlayerId) !== null)? true : false;
         }
 
     }]);

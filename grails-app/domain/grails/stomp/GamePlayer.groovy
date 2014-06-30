@@ -10,7 +10,6 @@ class GamePlayer {
     String name
     Hand hand
     Integer credits = 0
-    Long internalId = 0
     String imageUrl = this.randomAvatar()
     Type type
 
@@ -18,6 +17,7 @@ class GamePlayer {
         name(required: true, blank: false)
         hand(required: false)
         credits(required: false)
+        imageUrl(required: false, blank: true)
     }
 
     static randomAvatar(){

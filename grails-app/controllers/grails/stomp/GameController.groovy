@@ -58,10 +58,12 @@ class GameController {
 
     private newGame(){
         if(!this.currentGame || this.currentGame.isGameOver() ){
-            gameNotificationService.notifyGameStatus(currentGame)
 
             this.currentGame = gameService.newBlackjackGame()
+
+            gameNotificationService.notifyGameStatus(currentGame)
             gameNotificationService.notifyGeneralMessage("A new game is about to start, join in now", 'success')
+            gameNotificationService.notfiyUpdatedPlayer(currentGame.dealer)
             startNewGameCountdown()
         }
 
@@ -109,7 +111,7 @@ class GameController {
     }
 
     private dealAllPlayers(){
-        this.currentGame.round = BlackJack.Round.DEAL
+
         gameService.newHandRound(this.currentGame)
 
         gameNotificationService.notfiyUpdatedHand(currentGame.dealer)
@@ -138,8 +140,6 @@ class GameController {
            }
       gameNotificationService.notifyGameStatus(currentGame)
    }
-
-
 
     private dealerMove(){
         this.currentGame.round = BlackJack.Round.DEALER_MOVE
@@ -208,9 +208,9 @@ class GameController {
         def data = []
         if(currentGame){
             data <<  gameNotificationService.notifyGameStatus(currentGame, false)
-            data << gameNotificationService.notfiyUpdatedHand(currentGame.dealer, false)
+            data << gameNotificationService.notfiyUpdatedPlayer(currentGame.dealer, false)
             currentGame?.players?.each{
-                data <<  gameNotificationService.notfiyUpdatedPlayer(it, false)
+                data << gameNotificationService.notfiyUpdatedPlayer(it, false)
             }
         }
         render (data as JSON)

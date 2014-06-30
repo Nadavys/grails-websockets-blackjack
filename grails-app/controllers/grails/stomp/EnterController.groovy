@@ -9,9 +9,7 @@ class EnterController {
         GamePlayer gamePlayer
         if(params.isSubmit){
             playerName = params.playerName
-            Random random = new Random()
-            gamePlayer = new GamePlayer(name: playerName, internalId: random.nextLong().abs(),
-                    type: GamePlayer.Type.DEALER)
+            gamePlayer = new GamePlayer(name: playerName, type: GamePlayer.Type.PLAYER)
             if(gamePlayer.validate()){
                 //want the player to have an ID
                 gamePlayer.save(flush: true)

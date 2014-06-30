@@ -49,7 +49,7 @@ class BlackJack extends CardGame{
         this.round = BlackJack.Round.PLACE_BETS
         this.countDownTimer = this.newGameCountDownInitial
 
-        dealer = new GamePlayer(name:"Dealer", internalId: 0, imageUrl: "")
+
     }
 
 

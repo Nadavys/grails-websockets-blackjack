@@ -41,7 +41,7 @@ angular.module('app.directives', ['app.services'])
             scope: {
                 player: '=player' ,
                 game: '=game',
-                currentUser: '=currentUser'
+                currentPlayerId: '=currentPlayerId'
             },
             templateUrl: window.BASE_URL + '/partials/directives/player.tpl.html',
 
@@ -56,8 +56,6 @@ angular.module('app.directives', ['app.services'])
                 $scope.$watch('game', function(newVal) {
                     $scope.game = newVal;
                 });
-
-                console.log("current!", $scope.currentUser)
 
             },
             controller: function($scope){

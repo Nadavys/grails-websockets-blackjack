@@ -27,7 +27,7 @@ class GameNotificationService {
     }
 
     def notfiyUpdatedHand(GamePlayer player, doSendSocket = true){
-        println "new cards for player ${player.internalId}"
+        log.info "new cards for player ${player.id} type ${player.type}"
         def data = [
                 command: 'update.hand',
                 entity: convert(player)
@@ -40,7 +40,6 @@ class GameNotificationService {
     }
 
     def notfiyUpdatedPlayer(GamePlayer player, doSendSocket = true){
-        //println "new player ${player.internalId}"
         def data = [
                 command: 'update.player',
                 entity: convert(player)
@@ -63,17 +62,18 @@ class GameNotificationService {
         resultMap['round'] = blackJack.round.toString()
         resultMap['timeStarted'] = blackJack.timeStarted
         resultMap['countDownTimer'] = blackJack.countDownTimer
-        resultMap['activePlayer'] = blackJack.activePlayer?.internalId?: ''
+        resultMap['activePlayer'] = blackJack.activePlayer?.id?: ''
 
         resultMap
     }
 
     private convert(GamePlayer player){
         def resultMap = [:]
-        resultMap['userId'] = player.internalId
+        resultMap['id'] = player.id
         resultMap['name'] = player.name
         resultMap['hand'] = player.hand?(convert(player.hand)) : null
         resultMap['imageUrl'] = player.imageUrl
+        resultMap['type'] = player.type.toString()
         resultMap
     }
 

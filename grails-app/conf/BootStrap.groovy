@@ -10,19 +10,19 @@ class BootStrap {
         JSON.registerObjectMarshaller(BlackJack, 3) { BlackJack blackJack ->
             def resultMap = [:]
             resultMap['round'] = blackJack.round.toString()
-            resultMap['status'] = blackJack.status.toString()
             resultMap['timeStarted'] = blackJack.timeStarted
             resultMap['countDownTimer'] = blackJack.countDownTimer
-            resultMap['players'] = blackJack.players.collect{[name:it.name, id: it.internalId]}
+            resultMap['players'] = blackJack.players.collect{[name:it.name, id: it.id]}
 
             resultMap
         }
 
         JSON.registerObjectMarshaller(GamePlayer, 3) { GamePlayer player ->
             def resultMap = [:]
-            resultMap['userId'] = player.internalId
+            resultMap['id'] = player.id
             resultMap['name'] = player.name
             resultMap['hand'] = player.hand
+            resultMap['type'] = player.type.toString()
             resultMap
         }
 

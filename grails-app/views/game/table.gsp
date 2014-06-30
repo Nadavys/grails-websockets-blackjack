@@ -11,7 +11,7 @@
     <asset:stylesheet src="blackjack-cards.css"/>
 
     <script type="text/javascript">
-      window.currentPlayer = ${ [userId: gamePlayer.internalId, name: gamePlayer.name] as JSON };
+      window.currentPlayerId = ${gamePlayer.id};
     </script>
 </head>
 <body>
@@ -23,8 +23,6 @@
     <h1>Welcome ${gamePlayer.name}</h1>
     <p></p>
 </div>
-
-
      <div ng-show="generalMessage.message" class="alert alert-{{generalMessage.alertLevel}}">{{ generalMessage.message }}</div>
 
      <div class="alert alert-danger" ng-show="game.round == 'PLACE_BETS'">Time to new game: <span >{{game.countDownTimer}}</span></div>
@@ -34,19 +32,15 @@
      </div>
 
      <div class="row" >
-    <div>
+
         <gameplayer player="dealer" game="game"></gameplayer>
 
+        <gameplayer player="currentPlayer" game="game" current-player-id="currentPlayerId" ng-if="currentPlayer"  ></gameplayer>
+
         <!--players-->
-        <div ng-repeat="player in players">
-        <div class="joinGameButton" ng-show="currentUser.userId == currentUser.userId && !currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'PLACE_BETS' || game.round == null)">
-            <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Click to Join Game</button>
-        </div>
-
-               <gameplayer player="player" game="game" current-user="currentUser"/>
+        <div ng-repeat="player in players" ng-if="currentPlayerId != player.id" >
+               <gameplayer player="player" game="game"/>
        </div>
-
-</div>
 
  </div>
 
