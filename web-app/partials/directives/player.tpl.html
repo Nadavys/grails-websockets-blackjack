@@ -1,6 +1,10 @@
 <div class="user row well gameplayerSpace"  ng-class="{ 'currentTurn' : player.id == game.activePlayer, 'hand-won': player.hand.status == 'WON', 'hand-bust': player.hand.status == 'BUST'}">
 
-    <div class="col-md-2 col-xs-2" style="position: relative">
+    <div class="col-md-2 col-xs-4" style="position: relative;">
+
+        <img ng-if="player.type == 'DEALER'" ng-src="/grails-websockets-blackjack/images/cardsNchips.jpg" class="img-responsive img-circle"/>
+        <img ng-if="player.type == 'PLAYER'" ng-src="{{player.imageUrl}}" class="img-responsive img-circle"/>
+
                 <span ng-show="player.hand.status == 'BUST'"  class="playerStatus" >
                     <span class="glyphicon glyphicon-remove"></span>
                     Bust
@@ -10,36 +14,34 @@
                     <span  class="glyphicon glyphicon-ok"></span>
                     Won
                 </span>
-                <span ng-show="player.hand.bestValue == 21" class="playerStatus" style="font-size: 40px;margin-left:-5px;">
+                <span ng-show="player.hand.bestValue == 21" class="playerStatus playerStatus-blackjack" style="">
                     <!--<span  class="glyphicon glyphicon-ok"></span>-->
-                   Blackjack
+                   Black jack
                 </span>
                 <span ng-show="player.hand.status == 'EVEN'"  class="playerStatus">
                     <span  class="glyphicon glyphicon-ok"></span>
                     Even
                 </span>
-        <img ng-if="player.type == 'DEALER'" ng-src="/grails-websockets-blackjack/images/cardsNchips.jpg" class="img-responsive img-circle"/>
-        <img ng-if="player.type == 'PLAYER'" ng-src="{{player.imageUrl}}" class="img-responsive img-circle"/>
     </div>
 
-    <div class="col-md-10 col-xs-10">
+    <div class="col-md-10 col-xs-8" xstyle="border: 1px solid green">
         <div class="row">
             <div class="name" style="">{{player.name}} </div>
         </div>
-        <div class="row col-md-12 col-xs-9">
+        <div class="row col-md-12 pull-left">
             <div class="hand-area pull-left">
                 <hand hand="player.hand"/>
             </div>
 
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-3 pull-left">
 
                 <dl ng-show="player.hand.handValue.length">
                     <dd>Value(s)</dd>
                     <dt  class="playerTimer">{{player.hand.handValue.join(', ')}}</dt>
                 </dl>
                 <div class="btn-block" ng-show="player.id == currentPlayerId && game.activePlayer == currentPlayerId" >
-                    <button class="btn btn-danger" ng-click="cmdPlayerMove('HIT')" >Hit</button>
-                    <button class="btn btn-primary" ng-click="cmdPlayerMove('STAND')" >Stand</button>
+                    <button class="btn btn-danger btn-lg btn-block" ng-click="cmdPlayerMove('HIT')" >Hit</button>
+                    <button class="btn btn-primary btn-lg btn-block" ng-click="cmdPlayerMove('STAND')" >Stand</button>
                     <div class="playerTimer">Time Left: {{game.countDownTimer}}</div>
 
                     <div class="btn btn-lg btn-danger disabled" ng-show="game.round == 'PLAYER_MOVE' && game.activePlayer != currentPlayerId && player.id != currentPlayerId"> Playing... </div>

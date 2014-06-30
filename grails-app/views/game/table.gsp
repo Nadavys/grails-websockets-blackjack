@@ -27,8 +27,8 @@
 
      <div class="alert alert-danger" ng-show="game.round == 'PLACE_BETS'">Time to new game: <span >{{game.countDownTimer}}</span></div>
 
-     <div class="joinGameButton" ng-show="!currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'PLACE_BETS' || game.round == null)">
-         <button class="btn btn-lg btn-danger blink" ng-click="cmdJoinGame()" >Click to Join Game</button>
+     <div class="joinGameButton btn-lg" ng-show="!currentUserAskedToJoin && (game.round == 'GAMEOVER' || game.round == 'PLACE_BETS' || game.round == null)">
+         <button class="btn btn-lg btn-danger blink  btn-block" ng-click="cmdJoinGame()" >Click to Join Game</button>
      </div>
 
      <div class="row" >

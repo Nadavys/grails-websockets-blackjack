@@ -133,5 +133,31 @@ background:
 
 }
 
-.joinGameButton button{
+#joinGameButton button{
+}
+
+.playerStatus-blackjack{
+    font-size: 40px;
+    margin-left:-5px;
+}
+
+
+@media screen and (max-width: 991px) {
+
+}
+
+
+@media screen and (max-width: 767px) {
+    .playerStatus{
+        position: static;
+    }
+
+    .playerStatus, .playerStatus-blackjack{
+        font-size: 2.3em;
+        xmargin-left:-5px;
+    }
+}
+
+.psr{
+    border: 1px solid red;
 }
