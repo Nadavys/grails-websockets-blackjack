@@ -16,7 +16,7 @@
                 </span>
                 <span ng-show="player.hand.bestValue == 21" class="playerStatus playerStatus-blackjack" style="">
                     <!--<span  class="glyphicon glyphicon-ok"></span>-->
-                   Black jack
+                   Blackjack
                 </span>
                 <span ng-show="player.hand.status == 'EVEN'"  class="playerStatus">
                     <span  class="glyphicon glyphicon-ok"></span>
@@ -44,8 +44,9 @@
                     <button class="btn btn-primary btn-lg btn-block" ng-click="cmdPlayerMove('STAND')" >Stand</button>
                     <div class="playerTimer">Time Left: {{game.countDownTimer}}</div>
 
-                    <div class="btn btn-lg btn-danger disabled" ng-show="game.round == 'PLAYER_MOVE' && game.activePlayer != currentPlayerId && player.id != currentPlayerId"> Playing... </div>
+
                 </div>
+                <div style="font-size: 1.7em" class="label label-warning" ng-show="game.activePlayer && game.activePlayer != currentPlayerId && game.activePlayer == player "> Playing... </div>
 
             </div>
         </div>

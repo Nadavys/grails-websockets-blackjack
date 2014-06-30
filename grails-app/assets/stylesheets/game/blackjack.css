@@ -137,26 +137,28 @@ background:
 }
 
 .playerStatus-blackjack{
-    font-size: 40px;
+    font-size: 37px;
     margin-left:-5px;
 }
 
 
-@media screen and (max-width: 991px) {
-
-}
-
-
-@media screen and (max-width: 767px) {
-    .playerStatus{
-        position: static;
-    }
-
+@media screen and (max-width: 767px){
     .playerStatus, .playerStatus-blackjack{
-        font-size: 2.3em;
-        xmargin-left:-5px;
+        font-size: 1.8em;
+        position: static;
+
     }
 }
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .playerStatus, .playerStatus-blackjack{
+        position: static;
+        font-size: 2.7em;
+
+    }
+}
+
+
 
 .psr{
     border: 1px solid red;
