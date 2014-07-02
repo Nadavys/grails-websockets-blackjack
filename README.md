@@ -15,6 +15,9 @@ This code exemplifies
 
 Still left to do:
 1. Authenticate users who subscribed to socket feed 
+ 
 2. Conform the backend to Publisher/subscriber pattern 
+
 3. Might want to find a better alternative to "Thread.sleep" for enabling the timer 
+
 4. Track how many loses/wins per player  
