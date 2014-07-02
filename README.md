@@ -14,6 +14,7 @@ This code exemplifies
 
 
 Still left to do:
+
 1. Authenticate users who subscribed to socket feed 
  
 2. Conform the backend to Publisher/subscriber pattern 
