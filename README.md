@@ -8,6 +8,7 @@ Install, share your URL with friends, and play a collaborated blackjack game!
 Requires Grails version 2.4.0+ (Spring 4+)
 
 This code exemplifies
+
 1. hybrid usage of AngularJS / Grails GSP
 
 2. Websockets and Ajax
