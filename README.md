@@ -18,7 +18,7 @@ Still left to do:
 
 1. Authenticate users who subscribed to socket feed 
  
-2. Conform the backend to Publisher/subscriber pattern 
+2. Conform the backend to Observer pattern using Spring 4 tools 
 
 3. Might want to find a better alternative to "Thread.sleep" for enabling the timer 
 
