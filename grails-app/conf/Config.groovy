@@ -120,3 +120,6 @@ log4j.main = {
 }
 
 grails.project.fork.test = false
+//todo: fix broken javascript in minification
+grails.assets.minifyJs = false
+grails.assets.bundle=false

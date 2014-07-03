@@ -29,7 +29,7 @@
             <input type="hidden" name="isSubmit" value="true"/>
             <div class="form-group">
             <label>Player Name</label>
-         <input name="playerName" class="form-control" value="playerName"/>
+         <input name="playerName" class="form-control" value="${playerName}"/>
                 </div>
 
           <div class="form-group">

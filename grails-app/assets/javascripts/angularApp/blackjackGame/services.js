@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('app.services', [])
-    .service('RPCService', function($http,$q){
+    .service('RPCService',[ '$http','$q', '$window', function($http,$q, $window){
         return{
             newGame: function() {
 
                 var deferred = $q.defer();
-                $http.get(BASE_URL + "/game/startNewGame/").success(function(data){
+                $http.get($window.BASE_URL + "/game/startNewGame/").success(function(data){
                     deferred.resolve(data.data);
                 }).error(function(data){
                         alert("Something wrong happened")
@@ -17,7 +17,7 @@ angular.module('app.services', [])
             endGame: function() {
 
                 var deferred = $q.defer();
-                $http.get(BASE_URL + "/game/endGame/").success(function(data){
+                $http.get($window.BASE_URL + "/game/endGame/").success(function(data){
                     deferred.resolve(data.data);
                 }).error(function(data){
                         alert("Something wrong happened")
@@ -28,7 +28,7 @@ angular.module('app.services', [])
             joinGame: function() {
 
                 var deferred = $q.defer();
-                $http.get(BASE_URL + "/game/joinGame/" ).success(function(data){
+                $http.get($window.BASE_URL + "/game/joinGame/" ).success(function(data){
                     deferred.resolve(data.data);
                 }).error(function(data){
                         alert("Something wrong happened")
@@ -39,7 +39,7 @@ angular.module('app.services', [])
             playerMove: function(action) {
 
                 var deferred = $q.defer();
-                $http.get(BASE_URL + "/game/getPlayerMove/" + action ).success(function(data){
+                $http.get($window.BASE_URL + "/game/getPlayerMove/" + action ).success(function(data){
                     deferred.resolve(data);
                 }).error(function(data){
                         alert("Something wrong happened" )
@@ -51,7 +51,7 @@ angular.module('app.services', [])
             getTableStatus: function() {
 
                 var deferred = $q.defer();
-                $http.get(BASE_URL + "/game/tableStatus/" ).success(function(data){
+                $http.get($window.BASE_URL + "/game/tableStatus/" ).success(function(data){
                     deferred.resolve(data);
                 }).error(function(data){
                         alert("Something wrong happened" )
@@ -59,30 +59,6 @@ angular.module('app.services', [])
                     });
                 return deferred.promise;
             }
-            /*,
-            certifyForTask: function(raterIds, taskDef) {
-                console.log(arguments)
-                var params = {};
-                params.raterIds = raterIds;
-                params.taskDef = taskDef;
-                console.log(params)
 
-                var deferred = $q.defer();
-                $http.post(BASE_URL + "/adminRater/certifyRatersForTask", params).success(function(data){
-                    deferred.resolve(data.data);
-                }).error(function(data){
-                        GlobalMessagesService.somethingReallyBadHappenedError();
-                    });
-                return deferred.promise;
-            },
-            raterDetails: function(raterId) {
-                var deferred = $q.defer();
-                $http.get(BASE_URL + "/adminRater/raterDetails/" + raterId).success(function(data){
-                    deferred.resolve(data.data);
-                }).error(function(data){
-                        GlobalMessagesService.somethingReallyBadHappenedError();
-                    });
-                return deferred.promise;
-            }   */
         }
-    });
+    }]);

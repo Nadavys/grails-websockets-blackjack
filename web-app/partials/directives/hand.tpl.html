@@ -1,4 +1,4 @@
-<div  ng-repeat="card in hand.cards" class="card xcol-md-1 xcol-xs-1 {{card.suit | lowercase}}" ng-class="{'isHiddenCard': !card.isVisible }">
+<div  ng-repeat="card in hand.cards" class="card col-md-1 col-xs-1 {{card.suit | lowercase}}" ng-class="{'isHiddenCard': !card.isVisible }">
 
                 <div class="rank"  ng-switch on="card.rank">
                             <span data-ng-switch-when="DEUCE">2</span>

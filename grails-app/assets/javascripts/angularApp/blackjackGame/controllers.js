@@ -6,7 +6,7 @@ angular.module('app.controllers', [])
         //todo: more elegant
         $scope.currentPlayerId = $window.currentPlayerId
         $scope.currentPlayer = null
-        console.warn("currentPlayerId", $scope.currentPlayerId)
+        //console.warn("currentPlayerId", $scope.currentPlayerId)
 
         $scope.game = {};
         $scope.players = [];

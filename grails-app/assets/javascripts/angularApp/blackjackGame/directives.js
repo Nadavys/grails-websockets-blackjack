@@ -4,14 +4,14 @@
 
 angular.module('app.directives', ['app.services'])
 
-    .directive('hand', function() {
+    .directive('hand', [ '$window',function($window) {
         return {
             transclude: true,
             restrict: 'A',
             scope: {
                 hand: '=hand'
             },
-            templateUrl: window.BASE_URL + '/partials/directives/hand.tpl.html',
+            templateUrl: $window['BASE_URL'] + '/partials/directives/hand.tpl.html',
 
             link: function($scope, $element, $attrs){
 
@@ -32,9 +32,9 @@ angular.module('app.directives', ['app.services'])
                 };
             }
         }
-    })
+    }])
 
-    .directive('gameplayer', function(RPCService) {
+    .directive('gameplayer', [ '$window', 'RPCService',function($window, RPCService) {
         return {
             transclude: true,
             restrict: 'AE',
@@ -43,11 +43,10 @@ angular.module('app.directives', ['app.services'])
                 game: '=game',
                 currentPlayerId: '=currentPlayerId'
             },
-            templateUrl: window.BASE_URL + '/partials/directives/player.tpl.html',
+            templateUrl: $window['BASE_URL'] + '/partials/directives/player.tpl.html',
 
             link: function($scope, $element, $attrs){
-
-                console.warn("gameplayer", $scope.player)
+                $scope.BASE_URL = $window.BASE_URL;
 
                 $scope.$watch('player', function(newVal) {
                     $scope.player = newVal;
@@ -79,4 +78,4 @@ angular.module('app.directives', ['app.services'])
                 };
             }
         }
-    });
+    }]);

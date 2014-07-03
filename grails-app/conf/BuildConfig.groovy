@@ -115,3 +115,6 @@ grails.project.dependency.resolution = {
 disable.auto.recompile=false
 grails.gsp.enable.reload=true
 //grails.reload.enabled = true
+//todo: fix broken javascript in minification
+grails.assets.minifyJs = false
+grails.assets.bundle=false

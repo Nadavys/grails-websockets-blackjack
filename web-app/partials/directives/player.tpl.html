@@ -1,8 +1,7 @@
 <div class="user row well gameplayerSpace"  ng-class="{ 'currentTurn' : player.id == game.activePlayer, 'hand-won': player.hand.status == 'WON', 'hand-bust': player.hand.status == 'BUST'}">
 
     <div class="col-md-2 col-xs-4" style="position: relative;">
-
-        <img ng-if="player.type == 'DEALER'" ng-src="/grails-websockets-blackjack/images/cardsNchips.jpg" class="img-responsive img-circle"/>
+        <img ng-if="player.type == 'DEALER'" ng-src="{{BASE_URL}}/images/cardsNchips.jpg" class="img-responsive img-circle"/>
         <img ng-if="player.type == 'PLAYER'" ng-src="{{player.imageUrl}}" class="img-responsive img-circle"/>
 
                 <span ng-show="player.hand.status == 'BUST'"  class="playerStatus" >
