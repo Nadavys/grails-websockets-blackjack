@@ -9,7 +9,7 @@ class GameController {
     GameNotificationService gameNotificationService
     GamePlayerSessionService gamePlayerSessionService
 
-   /* signleton game */
+    /* signleton game */
     static BlackJack currentGame
     def index() {
         if(gamePlayerSessionService.getCurrentGamePlayer(session)){
@@ -39,15 +39,15 @@ class GameController {
         newGame()
         def retVal = [command:'joinGame', success: true]
         if(currentGame?.round == BlackJack.Round.PLACE_BETS){
-        GamePlayer player = gamePlayerSessionService.getCurrentGamePlayer(session)
-        if(!currentGame.players.contains(player)){
-            //empty your hand on new game
-            player.hand = null
-            currentGame.players << player
-            gameNotificationService.notifyGameStatus(currentGame)
-            gameNotificationService.notfiyUpdatedPlayer(player)
-            gameNotificationService.notifyGeneralMessage("Player "+ player.name +" joined")
-        }
+            GamePlayer player = gamePlayerSessionService.getCurrentGamePlayer(session)
+            if(!currentGame.players.contains(player)){
+                //empty your hand on new game
+                player.hand = null
+                currentGame.players << player
+                gameNotificationService.notifyGameStatus(currentGame)
+                gameNotificationService.notfiyUpdatedPlayer(player)
+                gameNotificationService.notifyGeneralMessage("Player "+ player.name +" joined")
+            }
         }else{
             //wrong time to join
             retVal.success = false
@@ -67,14 +67,6 @@ class GameController {
             startNewGameCountdown()
         }
 
-    }
-
-    def endGame(){
-        this.currentGame?.round = BlackJack.Round.GAMEOVER
-        this.currentGame?.activePlayer = null
-        gameNotificationService.notifyGameStatus(currentGame)
-        gameNotificationService.notifyGeneralMessage("Game Over", 'danger')
-        render([command:'endGame', success: true] as JSON)
     }
 
     /*todo: make this scheduled and async*/
@@ -127,19 +119,19 @@ class GameController {
         }
     }
 
-   private playerMove(){
-       gameService.getNextActivePlayer(this.currentGame)
+    private playerMove(){
+        gameService.getNextActivePlayer(this.currentGame)
 
-       if(currentGame.activePlayer){
-           // start timer. player has given time to react
-           startPlayerMoveCountdown(currentGame.activePlayer)
-           gameNotificationService.notifyGeneralMessage("Player " + currentGame.activePlayer.name +" may `hit` or `stand`")
-       }else{
-           //no motr players, dealer moves
-               dealerMove()
-           }
-      gameNotificationService.notifyGameStatus(currentGame)
-   }
+        if(currentGame.activePlayer){
+            // start timer. player has given time to react
+            startPlayerMoveCountdown(currentGame.activePlayer)
+            gameNotificationService.notifyGeneralMessage("Player " + currentGame.activePlayer.name +" may `hit` or `stand`")
+        }else{
+            //no motr players, dealer moves
+            dealerMove()
+        }
+        gameNotificationService.notifyGameStatus(currentGame)
+    }
 
     private dealerMove(){
         this.currentGame.round = BlackJack.Round.DEALER_MOVE
@@ -153,8 +145,6 @@ class GameController {
         gameOver()
     }
 
-
-    //todo: resolution
     private gameOver(){
         gameService.gameFinale(currentGame)
         gameNotificationService.notifyGameStatus(currentGame)
@@ -190,14 +180,12 @@ class GameController {
             if(this.currentGame.activePlayer.hand.isValidHand()){
                 //keep playing
                 currentGame.resetPlayerMoveTimer()
-                //gameNotificationService.notifyRequirePlayerMove()
             }else{
                 playerMove()
             }
         }else{
             //ooops
         }
-
     }
 
     /*

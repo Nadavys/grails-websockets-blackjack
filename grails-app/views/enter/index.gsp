@@ -6,25 +6,6 @@
     %{--<asset:javascript src="spring-websocket" />--}%
 
     <script type="text/javascript">
-    /*    $(function() {
-            var socket = new SockJS("${createLink(uri: '/stomp')}");
-            var client = Stomp.over(socket);
-
-            client.connect({}, function() {
-                client.subscribe("/topic/pushGameStatus", function(message) {
-                    var data = JSON.parse(message.body);
-                    console.info("message", data);
-                    console.info("message", data.command);
-//                    $("#eventList").append("<li>new event: " + data.id+ "</li>");
-                    switch (data.command){
-                        case 'timeToNewGame':
-                            $('#countdownToNewGame').html(data.time)
-                            break;
-                    }
-                });
-            });
-        });
-    */
     </script>
 </head>
 
@@ -34,7 +15,7 @@
 <div class="jumbotron">
     <h1>Daddy Needs A New Pair of Shoes!</h1>
     <p>Enter your name and join the blackjack Table</p>
-    <p><a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+    <p><a href="http://en.wikipedia.org/wiki/Blackjack" class="btn btn-primary btn-lg" target="_blank" role="button">Learn To play BlackJack &raquo;</a></p>
 </div>
 
 
