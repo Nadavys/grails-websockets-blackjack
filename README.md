@@ -6,8 +6,6 @@ This is an example project I made for Grails using websockets and AngularJS.
 Install and play a collaborated blackjack game!
 Requires Grails version 2.4.0+ (needs Spring 4+)
 
-Deployed Version:
-http://ec2-54-191-55-56.us-west-2.compute.amazonaws.com/blackjack/
 
 This code exemplifies
 
